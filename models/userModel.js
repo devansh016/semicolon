@@ -60,6 +60,9 @@ userSchema.methods = {
     generateToken: function() {
         return jwt.sign({ userid: this.userid }, process.env.JWT_SECRET, { expiresIn: '86400s' })
     },
+    getUserData: function() {
+        return { username: this.username, name: this.name, email: this.email }
+    },
     changePassword: function(newpassword) {
         this.password = newpassword;
         this.save();

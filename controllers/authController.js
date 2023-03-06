@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 async function authenticate({ username, password }) {
     const user = await User.findOne({ username });
     if(user && user.verifyUserPassword(password)) {
-        return { "status": 200, "token": user.generateToken() };
+        return { "status": 200, "user": user.getUserData(), "token": user.generateToken() };
     } else {
         return { "status": 403, "message": "Wrong username/email or password." };
     }
@@ -19,7 +19,7 @@ async function register({ username, name, email, password }) {
     else {
         const user = new User({ username, name, email, password, userid: uuidv4() });
         await user.save();
-        return { "success": true, "status": 200, "token": "Bearer "+ user.generateToken() };
+        return { "success": true, "status": 200};
     }
 };
 
