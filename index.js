@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const database = require("./utils/database");
+var cors = require('cors')
 const port = process.env.PORT || 80;
 
 // const winston = require('winston');
@@ -11,6 +12,7 @@ const port = process.env.PORT || 80;
 // };
 // const logger = winston.createLogger(logConfiguration);
 
+app.use(cors())
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: false }));
 
