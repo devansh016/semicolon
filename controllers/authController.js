@@ -4,22 +4,55 @@ const { v4: uuidv4 } = require('uuid');
 async function authenticate({ username, password }) {
     const user = await User.findOne({ username });
     if(user && user.verifyUserPassword(password)) {
-        return { "status": 200, "user": user.getUserData(), "token": user.generateToken(), "message": "Login Sucess" };
+        return {   
+            "status": 200,
+            "response": {
+                "success": true,
+                "user": user.getUserData(),
+                "message": "User Login Successfully."
+            },
+            "token": user.generateToken(), 
+        };
     } else {
-        return { "status": 403, "message": "Wrong username/email or password." };
+        return { 
+            "success": false, 
+            "status": 403, 
+            "response": {
+                "success": false,
+                "message": "Wrong username/email or password."
+            },
+        };
     }
 };
 
 async function register({ username, name, email, password }) {
     if (await User.findOne({ email })) {
-        return { "success": false, "status": 409, "message": "Email id " + email + " is already in use." }
+        return { 
+            "status": 409, 
+            "response": {
+                "success": false,
+                "message": "Email id " + email + " is already in use."
+            }
+        };
     } else if (await User.findOne({ username })) {
-        return { "success": false, "status": 409, "message": "Username " + username + " is already in use." }
+        return {
+            "status": 409, 
+            "response": {
+                "success": false,
+                "message": "Username " + username + " is already in use."
+            }
+        };
     }
     else {
         const user = new User({ username, name, email, password, userid: uuidv4() });
         await user.save();
-        return { "success": true, "status": 200, "message": "Account Created."};
+        return {
+            "status": 200, 
+            "response": {
+                "success": true,
+                "message": "Account created successfully."
+            }
+        }
     }
 };
 
@@ -28,13 +61,31 @@ async function changePassword ({ userid, password, newpassword }){
     if(user){
         if (user.verifyUserPassword(password)) {
             user.changePassword(newpassword);
-            return { "success": true, "status": 200, "message": "Password changed." }
+            return {
+                "status": 200, 
+                "response": {
+                    "success": true,
+                    "message": "Password changed successfully."
+                }
+            }
         }
         else {
-            return { "success": false, "status": 401, "message": "Current password incorrect." }
+            return {
+                "status": 401, 
+                "response": {
+                    "success": false,
+                    "message": "Current Password Incorrect."
+                }
+            }
         }
     } else {
-        return {  "success": false, "status": 500, "message": "Internal Server Error!" }
+        return {
+            "status": 404, 
+            "response": {
+                "success": false,
+                "message": "User not found."
+            }
+        }
     }
 };
 

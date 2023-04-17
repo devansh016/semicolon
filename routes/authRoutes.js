@@ -10,21 +10,21 @@ router.patch("/changepassword", authenticateUser, changePassword);
 function signinUser(req, res, next){
     authController.authenticate(req.body)
         .then( data => {
-            res.status(data.status).cookie('token', data.token).send(data);
+            res.status(data.status).cookie('token', data.token).send(data.response);
         })
 };
 
 function signupUser(req, res, next){
     authController.register(req.body)
         .then( data => {
-            res.status(data.status).send(data);
+            res.status(data.status).send(data.response);
         })
 };
 
 function changePassword(req, res, next){
     authController.changePassword(req.body)
         .then( data => {
-            res.status(data.status).send(data);
+            res.status(data.status).send(data.response);
         })
 };
 
