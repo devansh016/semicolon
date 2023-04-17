@@ -1,46 +1,78 @@
 const User = require("../models/userModel");
-const { v4: uuidv4 } = require('uuid');
 
 async function update_profile({ userid, profile }) {
-    const user = await User.findOne({ userid });
-    if(user) {
-        
-        return { "status": 200, "user": user.getUserData(), "token": user.generateToken(), "message": "Login Sucess" };
-    } else {
-        return { "status": 403, "message": "Can't update user profile." };
+    try{
+        const user = await User.findOne({ userid });
+        if(user) {
+            user.name = profile.name
+            user.email = profile.email
+            user.gender = profile.gender
+            user.contact_number = profile.contact_number
+            await user.save();
+            return { 
+                "status": 200, 
+                "response": {
+                    "success": true,
+                    "message": "Profile Updated.",
+                    "profile": user.getUserProfile()
+                }
+            };
+        } else {
+            return { 
+                "status": 500, 
+                "response": {
+                    "success": false,
+                    "message": "Internal Server Error.",
+                    "user": user.getUserProfile()
+                }
+            };
+        }
+    } catch (error) {
+        return { 
+            "status": 500, 
+            "response": {
+                "success": false,
+                "message": error.message,
+            }
+        };
     }
+    
 };
 
 async function get_profile({ userid }) {
-    if (await User.findOne({ email })) {
-        return { "success": false, "status": 409, "message": "Email id " + email + " is already in use." }
-    } else if (await User.findOne({ username })) {
-        return { "success": false, "status": 409, "message": "Username " + username + " is already in use." }
-    }
-    else {
-        const user = new User({ username, name, email, password, userid: uuidv4() });
-        await user.save();
-        return { "success": true, "status": 200, "message": "Account Created."};
+    const user = await User.findOne({ userid });
+    if(user) {
+        return { 
+            "status": 200, 
+            "response": {
+                "success": true,
+                "profile": user.getUserProfile()
+            }
+        };
+    } else {
+        return { 
+            "status": 505, 
+            "response": {
+                "success": false,
+                "message": "Internal Server Error.",
+            }
+        };
     }
 };
 
-async function changePassword ({ userid, password, newpassword }){
-    const user = await User.findOne({ userid });
-    if(user){
-        if (user.verifyUserPassword(password)) {
-            user.changePassword(newpassword);
-            return { "success": true, "status": 200, "message": "Password changed." }
+async function delete_user({ userid }) {
+    const user = await User.deleteOne({ userid });
+    return { 
+        "status": 200, 
+        "response": {
+            "success": true,
+            "message": "User Deleted."
         }
-        else {
-            return { "success": false, "status": 401, "message": "Current password incorrect." }
-        }
-    } else {
-        return {  "success": false, "status": 500, "message": "Internal Server Error!" }
-    }
+    };
 };
 
 module.exports ={
-    authenticate,
-    register,
-    changePassword
+    update_profile,
+    get_profile,
+    delete_user
 }

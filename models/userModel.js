@@ -31,6 +31,13 @@ const userSchema = new Schema({
             message: 'Email Invalid.',
         },
     },
+    gender: {
+        type: String,
+        enum: ['Male', 'Female']
+    },
+    contact_number: {
+        type: String
+    },
     password : {
         type: String,
         required: [true, 'Password Required.']
@@ -62,6 +69,9 @@ userSchema.methods = {
     },
     getUserData: function() {
         return { username: this.username, name: this.name, email: this.email }
+    },
+    getUserProfile: function() {
+        return { username: this.username, name: this.name, email: this.email, gender: this.gender || "", contact_number: this.contact_number || "" }
     },
     changePassword: function(newpassword) {
         this.password = newpassword;
