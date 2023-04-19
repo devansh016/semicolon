@@ -9,6 +9,7 @@ async function authenticate({ username, password }) {
             "response": {
                 "success": true,
                 "user": user.getUserData(),
+                "token": user.generateToken(),
                 "message": "User Login Successfully."
             },
             "token": user.generateToken(), 
