@@ -10,7 +10,12 @@ router.patch("/changepassword", authenticateUser, changePassword);
 function signinUser(req, res, next){
     authController.authenticate(req.body)
         .then( data => {
-            res.status(data.status).cookie('token', data.token).send(data.response);
+            res.status(data.status).cookie('token', data.token, {
+                secure: true,
+                httpOnly: true,
+                // domain: 'example.com',
+                sameSite: 'None'
+            }).send(data.response);
         })
 };
 
