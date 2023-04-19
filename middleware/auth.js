@@ -4,7 +4,7 @@ require('dotenv').config();
 
 async function authenticateUser(req, res, next) {
     try {
-        const client_jwt_token = req.cookies.token | req.headers.authorization.split(' ')[1]
+        const client_jwt_token = req.cookies.token || req.headers.authorization.split(' ')[1]
         if(!client_jwt_token) {
             res.status(401).send({ "success": false, "message": "JWT token not found."});
             return
@@ -13,6 +13,7 @@ async function authenticateUser(req, res, next) {
         req.body.userid = decoded.userid;
         const user = await User.findOne({"userid": decoded.userid});
         if(user){
+            console.log(user)
             next();
         }else{
             res.status(401).send({ "success": false, "message": "User not found."});
