@@ -4,8 +4,7 @@ require('dotenv').config();
 
 async function authenticateUser(req, res, next) {
     try {
-        const client_jwt_token = req.cookies.token
-
+        const client_jwt_token = req.cookies.token | req.headers.authorization.split(' ')[1]
         if(!client_jwt_token) {
             res.status(401).send({ "success": false, "message": "JWT token not found."});
             return
