@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const problemSchema = new Schema({
-    problemID: {
+    code: {
         type: String, 
-        unique: true, 
-        required: true
+        unique: [true, "Problem code should be unique."], 
+        required: [true, "Problem code required."]
     },
     name: {
         type: String, 
@@ -25,12 +25,10 @@ const problemSchema = new Schema({
     constraints: {
         type: String, 
     },
-    sampleInput: {
-        type: String, 
-    },
-    sampleOutput: {
-        type: String, 
-    },
+    sample:[{
+        Input: { type: String },
+        Output: { type: String }
+    }],
     explanation: {
         type: String, 
     },
