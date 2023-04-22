@@ -13,7 +13,6 @@ async function authenticateUser(req, res, next) {
         req.body.userid = decoded.userid;
         const user = await User.findOne({"userid": decoded.userid});
         if(user){
-            console.log(user)
             next();
         }else{
             res.status(401).send({ "success": false, "message": "User not found."});

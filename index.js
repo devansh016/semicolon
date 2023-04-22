@@ -11,9 +11,16 @@ app.use(cors({
     preflightContinue: false,
     optionsSuccessStatus: 204
 }))
+
 app.use(cookieParser());
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: false }));
+
+app.use(function (req, res, next) {
+    console.log(req.body)
+    console.log(req.method)
+    next()
+})
 
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);

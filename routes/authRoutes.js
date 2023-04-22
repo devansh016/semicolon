@@ -13,7 +13,6 @@ function signinUser(req, res, next){
             res.status(data.status).cookie('token', data.token, {
                 secure: true,
                 httpOnly: true,
-                // domain: 'example.com',
                 sameSite: 'None'
             }).send(data.response);
         })
