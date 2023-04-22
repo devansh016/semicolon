@@ -28,6 +28,7 @@ async function update_profile({ userid, profile }) {
             };
         }
     } catch (error) {
+        console.log(error.message)
         return { 
             "status": 500, 
             "response": {
@@ -40,35 +41,58 @@ async function update_profile({ userid, profile }) {
 };
 
 async function get_profile({ userid }) {
-    const user = await User.findOne({ userid });
-    if(user) {
+    try {
+        const user = await User.findOne({ userid });
+        if(user) {
+            return { 
+                "status": 200, 
+                "response": {
+                    "success": true,
+                    "profile": user.getUserProfile()
+                }
+            };
+        } else {
+            return { 
+                "status": 505, 
+                "response": {
+                    "success": false,
+                    "message": "Internal Server Error.",
+                }
+            };
+        }
+    } catch(error){
+        console.log(error.message)
+        return { 
+            "status": 500, 
+            "response": {
+                "success": false,
+                "message": error.message,
+            }
+        };
+    }
+    
+};
+
+async function delete_user({ userid }) {
+    try {
+        const user = await User.deleteOne({ userid });
         return { 
             "status": 200, 
             "response": {
                 "success": true,
-                "profile": user.getUserProfile()
+                "message": "User Deleted."
             }
         };
-    } else {
+    } catch(error){
+        console.log(error.message)
         return { 
-            "status": 505, 
+            "status": 500, 
             "response": {
                 "success": false,
-                "message": "Internal Server Error.",
+                "message": error.message,
             }
         };
     }
-};
-
-async function delete_user({ userid }) {
-    const user = await User.deleteOne({ userid });
-    return { 
-        "status": 200, 
-        "response": {
-            "success": true,
-            "message": "User Deleted."
-        }
-    };
 };
 
 module.exports ={
