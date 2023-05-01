@@ -23,6 +23,7 @@ async function addProblem ({code,name,isVisible,description,inputFormat,outputFo
             }
         }
     } catch(error) {
+        console.log(error.message)
         return {
             "status": 500,
             "response": {
@@ -44,6 +45,7 @@ async function getProblembyID ({code}){
             }
         }
     } catch(error) {
+        console.log(error.message)
         return { 
             "status": 500, 
             response:{
@@ -65,6 +67,7 @@ async function getProblem (){
             }
         }
     } catch(error) {
+        console.log(error.message)
         return { 
             "status": 500, 
             response:{
@@ -86,6 +89,7 @@ async function deleteProblembyID({ code }){
             }
         }
     } catch(error) {
+        console.log(error.message)
         return { 
             "status": 500, 
             response:{
