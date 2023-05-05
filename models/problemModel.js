@@ -26,8 +26,8 @@ const problemSchema = new Schema({
         type: String, 
     },
     sample:[{
-        Input: { type: String },
-        Output: { type: String }
+        input: { type: String },
+        output: { type: String }
     }],
     explanation: {
         type: String, 

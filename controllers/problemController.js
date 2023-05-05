@@ -14,7 +14,13 @@ async function addProblem ({code,name,isVisible,description,inputFormat,outputFo
             }
         }
         const problem = new Problem({code,name,isVisible,description,inputFormat,outputFormat,constraints,sample,explanation,difficulty,problemSetter,timeLimit,memoryLimit,tags,editorial })
+        // sample.forEach(sp => { 
+        //     console.log(sp)
+        //     problem.sample.push(sp);
+        // });
         await problem.save();
+
+
         return {
             "status": 200,
             "response": {

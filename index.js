@@ -31,6 +31,10 @@ app.use("/api/user", userRoutes);
 const probRoutes = require("./routes/problemRoutes");
 app.use("/api/admin", probRoutes);
 
+const submissionRoutes = require("./routes/submissionRoutes");
+app.use("/api/submission", submissionRoutes);
+
+
 database.on("error", console.error.bind(console, "connection error: "));
 database.once("open", function () {
     console.log("Database Connected successfully");
