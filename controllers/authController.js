@@ -1,4 +1,6 @@
 const User = require("../models/userModel");
+const Leaderboard = require("../models/leaderboardModel");
+
 const { v4: uuidv4 } = require('uuid');
 
 async function authenticate({ username, password }) {
@@ -47,6 +49,11 @@ async function register({ username, name, email, password }) {
     else {
         const user = new User({ username, name, email, password, userid: uuidv4() });
         await user.save();
+        const leaderboard = new Leaderboard({
+            "userid": user.userid,
+            "username": username
+        })
+        await leaderboard.save()
         return {
             "status": 200, 
             "response": {

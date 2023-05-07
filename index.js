@@ -34,6 +34,9 @@ app.use("/api/admin", probRoutes);
 const submissionRoutes = require("./routes/submissionRoutes");
 app.use("/api/submission", submissionRoutes);
 
+const leaderboardRoutes = require("./routes/leaderboardRoutes");
+app.use("/api/leaderboard", leaderboardRoutes);
+
 
 database.on("error", console.error.bind(console, "connection error: "));
 database.once("open", function () {

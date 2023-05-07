@@ -1,6 +1,7 @@
 var request = require("request-promise");
 const Problem = require("../models/problemModel");
 const Submission =  require("../models/submissionModel")
+const Leaderboard = require("../models/leaderboardModel");
 var base64 = require('base-64');
 var utf8 = require('utf8');
 
@@ -77,6 +78,12 @@ async function submitSolution({userid, source_code, language_id, problem_code}){
             "success": true,
         })
         await submission.save()
+        let leaderboard = await Leaderboard.findOne({ userid });
+        if (leaderboard && !leaderboard.problemCodes.includes(problem_code)){
+            leaderboard.problemCodes.push(problem_code)
+            await leaderboard.save()
+        }
+
         return {
             "status": 200, 
             "response": {
@@ -113,72 +120,6 @@ async function submitSolution({userid, source_code, language_id, problem_code}){
 };
 
 
-
-
-
-// async function run_testcases({source_code, language_id, problem_code}){
-
-//     var problem = await Problem.findOne({ "code": problem_code }, {sample: 1});
-//     let accepted = 0;
-//     let total_sample_cases = sample.length;
-
-//     // Running Each Sample Case
-//     problem.sample.forEach(sample => {
-//         const input = htmlToText(sample.input, { wordwrap: null, preserveNewlines: true});
-//         const output = htmlToText(sample.output, { wordwrap: null, preserveNewlines: true});
-
-//         let data = JSON.stringify({
-//             "source_code": base64.encode(utf8.encode(source_code)),
-//             "language_id": language_id,
-//             "number_of_runs": "1",
-//             "stdin": base64.encode(utf8.encode(input)),
-//             "expected_output": base64.encode(utf8.encode(output)),
-//         });
-
-//         let config = {
-//             method: 'post',
-//             maxBodyLength: Infinity,
-//             url: 'http://64.227.134.248/submissions/?base64_encoded=true&wait=true',
-//             headers: { 
-//               'Content-Type': 'application/json'
-//             },
-//             data : data
-//         };
-          
-//         axios.request(config)
-//           .then((response) => {
-//             if(response.data.status.id==3)
-//                 accepted++;
-//           })
-//           .catch((error) => {
-//             console.log(error);
-//           }); 
-//     });
-
-// }
-
-
-// async function submit_solution({source_code, language_id, problem_code}){
-    
-//     console.log(accepted)
-//     if(rejected==0)
-//         return {
-//             "status": 200, 
-//             "response": {
-//                 "success": true,
-//                 "message": "Submission Accepted."
-//             }
-//         }
-//     else {
-//         return {
-//             "status": 200, 
-//             "response": {
-//                 "success": true,
-//                 "message": "Wrong Submission."
-//             }
-//         }
-//     }
-// }
 
 module.exports = {
     // submit_solution,
