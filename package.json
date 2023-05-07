@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/devansh016/semicolon#readme",
   "dependencies": {
-    "axios": "^1.4.0",
+    "base-64": "^1.0.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -29,6 +29,8 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.0",
     "otp-generator": "^4.0.1",
+    "request-promise": "^4.2.6",
+    "utf8": "^3.0.0",
     "uuid": "^9.0.0",
     "winston": "^3.8.2"
   },

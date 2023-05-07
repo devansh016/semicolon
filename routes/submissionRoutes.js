@@ -7,7 +7,7 @@ router.post("/", authenticateUser, submit_solution);
 
 
 function submit_solution(req, res, next){
-    submissionContoller.submit_solution(req.body)
+    submissionContoller.submitSolution(req.body)
         .then( data => {
             res.status(data.status).send(data.response);
         })
