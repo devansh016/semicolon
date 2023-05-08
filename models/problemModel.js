@@ -14,7 +14,7 @@ const problemSchema = new Schema({
         type: Boolean
     },
     statement: {
-        type: Boolean
+        type: String
     },
     description: {
         type: String, 
