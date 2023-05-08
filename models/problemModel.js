@@ -13,6 +13,9 @@ const problemSchema = new Schema({
     isVisible: {
         type: Boolean
     },
+    statement: {
+        type: Boolean
+    },
     description: {
         type: String, 
     },
