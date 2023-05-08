@@ -16,11 +16,12 @@ app.use(cookieParser());
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: false }));
 
-// app.use(function (req, res, next) {
-//     console.log(req.body)
-//     console.log(req.method)
-//     next()
-// })
+app.use(function (req, res, next) {
+    console.log(req.method)
+    console.log(req.originalUrl)
+    console.log(req.body)
+    next()
+})
 
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);
