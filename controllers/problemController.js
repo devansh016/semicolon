@@ -1,6 +1,6 @@
 const Problem = require("../models/problemModel");
 
-async function addProblem ({code,name,isVisible,description,inputFormat,outputFormat,constraints,sample,explanation,difficulty,problemSetter,timeLimit,memoryLimit,tags,editorial}) {
+async function addProblem ({code,name,isVisible, statement, description,inputFormat,outputFormat,constraints,sample,explanation,difficulty,problemSetter,timeLimit,memoryLimit,tags,editorial}) {
     try {
         const prob = await Problem.findOne({"code": code})
         if(prob){
@@ -13,7 +13,7 @@ async function addProblem ({code,name,isVisible,description,inputFormat,outputFo
                 
             }
         }
-        const problem = new Problem({code,name,isVisible,description,inputFormat,outputFormat,constraints,sample,explanation,difficulty,problemSetter,timeLimit,memoryLimit,tags,editorial })
+        const problem = new Problem({code,name,statement,isVisible,description,inputFormat,outputFormat,constraints,sample,explanation,difficulty,problemSetter,timeLimit,memoryLimit,tags,editorial })
         // sample.forEach(sp => { 
         //     console.log(sp)
         //     problem.sample.push(sp);
