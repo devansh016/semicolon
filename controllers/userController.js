@@ -4,10 +4,10 @@ async function update_profile({ userid, profile }) {
     try{
         const user = await User.findOne({ userid });
         if(user) {
-            user.name = profile.name
-            user.email = profile.email
-            user.gender = profile.gender
-            user.contact_number = profile.contact_number
+            if(profile.name) user.name = profile.name
+            if(profile.email) user.email = profile.email
+            if(profile.gender) user.gender = profile.gender
+            if(profile.contact_number) user.contact_number = profile.contact_number
             await user.save();
             return { 
                 "status": 200, 
