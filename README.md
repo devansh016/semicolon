@@ -1,4 +1,5 @@
-#Semicolon - Online Coding Problem Judge : Backend
+# Semicolon - Online Coding Problem Judge : Backend
+
 ---
 
 [Semicolon](https://semicolon-project.netlify.app/) is an online coding problem judge platform with the following objectives:
@@ -21,10 +22,10 @@ npm start
 ## Environment Variable Required
 
 ```sh
-MONGODB_URL = 
-JWT_SECRET = 
-JUDGE_0_URL = 
-PORT = 
+MONGODB_URL =
+JWT_SECRET =
+JUDGE_0_URL =
+PORT =
 ```
 
 Your app should now be running on [localhost](http://localhost/) at port 80 (or the .
@@ -50,6 +51,14 @@ Your app should now be running on [localhost](http://localhost/) at port 80 (or 
    ```
 
 1. Make a pull request on GitHub.
+
+### Database Design
+
+![Database Design](/res/images/db-design.png "Database Design")
+
+### Userflow Design
+
+![Userflow Design](/res/images/userflow-design.png "Userflow Design")
 
 ### Home Page
 
